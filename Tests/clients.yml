@@ -1,0 +1,5 @@
+services:
+
+    postgresql.users_connection.test:
+        alias: postgresql.users_connection
+        public: true

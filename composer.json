@@ -1,0 +1,32 @@
+{
+  "name": "drift/postgresql-bundle",
+  "description": "Postgresql Bundle for DriftPHP, a framework on top of Symfony and ReactPHP components",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Sergey Zhuk",
+      "email": "seregazhuk88@gmail.com"
+    },
+    {
+      "name": "Marc Morera",
+      "email": "yuhu@mmoreram.com"
+    }
+  ],
+
+  "require": {
+    "php": "^7.3",
+    "drift/http-kernel": "0.1.*",
+    "mmoreram/base-bundle": "^2.1",
+    "voryx/pgasync": "^2.0"
+  },
+
+  "autoload": {
+    "psr-4": {
+      "Drift\\Postgresql\\": "."
+    },
+    "exclude-from-classmap": [
+      "/Tests/"
+    ]
+  }
+}
