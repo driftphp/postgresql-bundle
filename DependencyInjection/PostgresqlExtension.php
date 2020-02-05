@@ -7,6 +7,8 @@
  * file that was distributed with this source code.
  *
  * Feel free to edit as you please, and have fun.
+ *
+ * @author Marc Morera <yuhu@mmoreram.com>
  */
 
 declare(strict_types=1);
@@ -16,6 +18,9 @@ namespace Drift\Postgresql\DependencyInjection;
 use Mmoreram\BaseBundle\DependencyInjection\BaseExtension;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
+/**
+ * Class PostgresqlExtension.
+ */
 class PostgresqlExtension extends BaseExtension
 {
     /**
@@ -89,7 +94,7 @@ class PostgresqlExtension extends BaseExtension
     protected function getParametrizationValues(array $config): array
     {
         return [
-            'postgresql.connections_configuration' => $config['connections'],
+            'postgresql.clients_configuration' => $config['clients'],
         ];
     }
 }

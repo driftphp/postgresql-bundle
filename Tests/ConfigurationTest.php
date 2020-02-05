@@ -7,6 +7,8 @@
  * file that was distributed with this source code.
  *
  * Feel free to edit as you please, and have fun.
+ *
+ * @author Marc Morera <yuhu@mmoreram.com>
  */
 
 declare(strict_types=1);
@@ -45,7 +47,7 @@ class ConfigurationTest extends BaseFunctionalTest
                 'test' => true,
             ],
             'imports' => [
-                ['resource' => __DIR__ .'/clients.yml'],
+                ['resource' => __DIR__.'/clients.yml'],
             ],
             'services' => [
                 'reactphp.event_loop' => [
@@ -57,7 +59,7 @@ class ConfigurationTest extends BaseFunctionalTest
                 ],
             ],
             'postgresql' => [
-                'connections' => [
+                'clients' => [
                     'users' => [
                         'host' => '127.0.0.1',
                         'user' => 'user',
@@ -72,10 +74,10 @@ class ConfigurationTest extends BaseFunctionalTest
     /**
      * Test.
      */
-    public function testProperConnection()
+    public function testProperClient()
     {
-        $connection = static::get('postgresql.users_connection.test');
-        $this->assertInstanceOf(Client::class, $connection);
-        $this->assertInstanceOf(Client::class, $connection);
+        $client = static::get('postgresql.users_client.test');
+        $this->assertInstanceOf(Client::class, $client);
+        $this->assertInstanceOf(Client::class, $client);
     }
 }

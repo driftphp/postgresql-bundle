@@ -22,6 +22,9 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 
+/**
+ * Class PostgresqlCompilerPass.
+ */
 class PostgresqlCompilerPass implements CompilerPassInterface
 {
     /**
@@ -29,39 +32,39 @@ class PostgresqlCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        $connectionsConfiguration = $container->getParameter('postgresql.connections_configuration');
-        if (empty($connectionsConfiguration)) {
+        $clientsConfiguration = $container->getParameter('postgresql.clients_configuration');
+        if (empty($clientsConfiguration)) {
             return;
         }
 
-        foreach ($connectionsConfiguration as $connectionName => $connectionConfiguration) {
-            $connectionAlias = $this->createConnection($container, $connectionConfiguration);
+        foreach ($clientsConfiguration as $clientName => $clientConfiguration) {
+            $clientAlias = $this->createclient($container, $clientConfiguration);
 
             $container->setAlias(
-                "postgresql.{$connectionName}_connection",
-                $connectionAlias
+                "postgresql.{$clientName}_client",
+                $clientAlias
             );
 
-            $container->setAlias(Client::class, $connectionAlias);
-            $container->registerAliasForArgument($connectionAlias, Client::class, "{$connectionName} connection");
+            $container->setAlias(Client::class, $clientAlias);
+            $container->registerAliasForArgument($clientAlias, Client::class, "{$clientName} client");
         }
     }
 
     /**
-     * Create connection and return it's reference.
+     * Create client and return it's reference.
      *
      * @param ContainerBuilder $container
      * @param array            $configuration
      *
      * @return string
      */
-    private function createConnection(
+    private function createclient(
         ContainerBuilder $container,
         array $configuration
     ): string {
         ksort($configuration);
-        $connectionHash = substr(md5(json_encode($configuration)), 0, 10);
-        $definitionName = "postgresql.connection.$connectionHash";
+        $clientHash = substr(md5(json_encode($configuration)), 0, 10);
+        $definitionName = "postgresql.client.$clientHash";
 
         if (!$container->hasDefinition($definitionName)) {
             $definition = new Definition(Client::class, [$configuration, new Reference(LoopInterface::class)]);
