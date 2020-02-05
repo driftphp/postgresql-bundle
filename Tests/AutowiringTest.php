@@ -47,7 +47,7 @@ class AutowiringTest extends BaseFunctionalTest
                 'test' => true,
             ],
             'imports' => [
-                ['resource' => __DIR__ .'/autowiring.yml'],
+                ['resource' => __DIR__.'/autowiring.yml'],
             ],
             'services' => [
                 'reactphp.event_loop' => [
@@ -59,7 +59,7 @@ class AutowiringTest extends BaseFunctionalTest
                 ],
             ],
             'postgresql' => [
-                'connections' => [
+                'clients' => [
                     'users' => [
                         'host' => '127.0.0.1',
                         'database' => 'orders',

@@ -7,6 +7,8 @@
  * file that was distributed with this source code.
  *
  * Feel free to edit as you please, and have fun.
+ *
+ * @author Marc Morera <yuhu@mmoreram.com>
  */
 
 declare(strict_types=1);

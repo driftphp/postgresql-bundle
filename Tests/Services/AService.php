@@ -17,35 +17,38 @@ namespace Drift\Postgresql\Tests\Services;
 
 use PgAsync\Client;
 
+/**
+ * Class AService.
+ */
 class AService
 {
     /**
      * @var Client
      */
-    private $connection1;
+    private $client1;
 
     /**
      * @var Client
      */
-    private $connection2;
+    private $client2;
 
     /**
      * @var Client
      */
-    private $connection3;
+    private $client3;
 
     /**
      * AService constructor.
      *
-     * @param Client $connection1
-     * @param Client $connection2
-     * @param Client $connection3
+     * @param Client $client1
+     * @param Client $client2
+     * @param Client $client3
      */
-    public function __construct(Client $usersConnection, Client $ordersConnection, Client $users2Connection)
+    public function __construct(Client $usersClient, Client $ordersClient, Client $users2Client)
     {
-        $this->connection1 = $usersConnection;
-        $this->connection2 = $ordersConnection;
-        $this->connection3 = $users2Connection;
+        $this->client1 = $usersClient;
+        $this->client2 = $ordersClient;
+        $this->client3 = $users2Client;
     }
 
     /**
@@ -53,7 +56,7 @@ class AService
      */
     public function areOK(): bool
     {
-        return $this->connection1 !== $this->connection2
-            && $this->connection1 === $this->connection3;
+        return $this->client1 !== $this->client2
+            && $this->client1 === $this->client3;
     }
 }

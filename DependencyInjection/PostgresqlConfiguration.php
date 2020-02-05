@@ -18,6 +18,9 @@ namespace Drift\Postgresql\DependencyInjection;
 use Mmoreram\BaseBundle\DependencyInjection\BaseConfiguration;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 
+/**
+ * Class PostgresqlConfiguration.
+ */
 class PostgresqlConfiguration extends BaseConfiguration
 {
     /**
@@ -29,7 +32,7 @@ class PostgresqlConfiguration extends BaseConfiguration
     {
         $rootNode
             ->children()
-                ->arrayNode('connections')
+                ->arrayNode('clients')
                     ->prototype('array')
                         ->children()
                             ->scalarNode('host')
