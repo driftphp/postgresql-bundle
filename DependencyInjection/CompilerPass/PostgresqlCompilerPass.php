@@ -38,15 +38,11 @@ class PostgresqlCompilerPass implements CompilerPassInterface
         }
 
         foreach ($clientsConfiguration as $clientName => $clientConfiguration) {
-            $clientAlias = $this->createclient($container, $clientConfiguration);
-
-            $container->setAlias(
-                "postgresql.{$clientName}_client",
-                $clientAlias
+            static::createclient(
+                $container,
+                $clientName,
+                $clientConfiguration
             );
-
-            $container->setAlias(Client::class, $clientAlias);
-            $container->registerAliasForArgument($clientAlias, Client::class, "{$clientName} client");
         }
     }
 
@@ -54,24 +50,26 @@ class PostgresqlCompilerPass implements CompilerPassInterface
      * Create client and return it's reference.
      *
      * @param ContainerBuilder $container
+     * @param string           $clientName
      * @param array            $configuration
-     *
-     * @return string
      */
-    private function createclient(
+    public static function createclient(
         ContainerBuilder $container,
+        string $clientName,
         array $configuration
-    ): string {
-        ksort($configuration);
-        $clientHash = substr(md5(json_encode($configuration)), 0, 10);
-        $definitionName = "postgresql.client.$clientHash";
+    ) {
+        $definitionName = "postgresql.{$clientName}_client";
 
-        if (!$container->hasDefinition($definitionName)) {
-            $definition = new Definition(Client::class, [$configuration, new Reference(LoopInterface::class)]);
+        $definition = new Definition(
+            Client::class,
+            [
+                $configuration,
+                new Reference(LoopInterface::class),
+            ]
+        );
 
-            $container->setDefinition($definitionName, $definition);
-        }
-
-        return $definitionName;
+        $container->setDefinition($definitionName, $definition);
+        $container->setAlias(Client::class, $definitionName);
+        $container->registerAliasForArgument($definitionName, Client::class, "{$clientName} client");
     }
 }
